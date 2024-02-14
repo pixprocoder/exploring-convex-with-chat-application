@@ -12,6 +12,7 @@ export default function App() {
   const likeMessage = useMutation(api.messages.like);
 
   const [newMessageText, setNewMessageText] = useState("");
+  const [isLiked, setIsLiked] = useState("");
 
   useEffect(() => {
     // Make sure scrollTo works on button click in Chrome
@@ -33,10 +34,23 @@ export default function App() {
           key={message._id}
           className={message.author === NAME ? "message-mine" : ""}
         >
-          <div className="text-3xl font-bold underline">{message.author}</div>
+          <div>{message.author}</div>
 
-          <p>{message.body}</p>
-          <span className="bg-red-500 text-5xl">Love</span>
+          <p>
+            {message.body}
+            <button
+              className="bg-gray-700"
+              onClick={async () => {
+                await likeMessage({ liker: NAME, messageId: message._id });
+              }}
+            >
+              {message.likes ? <span>{message.likes}</span> : null} 🤍
+            </button>
+          </p>
+          {/* <span onClick={async ( e) =>{
+            const liked = e.target?.value
+          } 
+          } className="cursor-pointer flex justify-end">💖</span> */}
         </article>
       ))}
       <form
