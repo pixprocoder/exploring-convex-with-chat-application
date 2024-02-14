@@ -9,6 +9,7 @@ const NAME = "samsul kobir";
 export default function App() {
   const messages = useQuery(api.messages.list);
   const sendMessage = useMutation(api.messages.send);
+  const likeMessage = useMutation(api.messages.like);
 
   const [newMessageText, setNewMessageText] = useState("");
 
@@ -32,9 +33,10 @@ export default function App() {
           key={message._id}
           className={message.author === NAME ? "message-mine" : ""}
         >
-          <div>{message.author}</div>
+          <div className="text-3xl font-bold underline">{message.author}</div>
 
           <p>{message.body}</p>
+          <span className="bg-red-500 text-5xl">Love</span>
         </article>
       ))}
       <form
